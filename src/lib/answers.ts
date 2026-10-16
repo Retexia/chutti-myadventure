@@ -18,7 +18,7 @@ export const CHECK: Record<string, (input: string) => boolean> = {
   "c2-gifts": (s) => (has(s, "Zmxvd2Vy") || has(s, "cm9zZQ==")) && has(s, "Y2hvYw=="),
   "c2-map": starts("ZGVoaXc=", "ZGVoaXdl"),
   "c4-dress": eq("Zm9ybWFs"),
-  "c4-morse": eq("Ymx1c2g="),
+  "c4-morse": eq("bWFuaWth"),
   "c5-shelf": starts("ZG9taW5v"),
   "c6-recon": (s) => norm(s).endsWith(dec("bGluZ28=")),
   "c6-terminal": eq("YWl4ZXRlcg=="),

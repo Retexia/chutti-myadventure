@@ -426,24 +426,31 @@ export function MorseLantern({ message }: { message: string }) {
   const [on, setOn] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [sound, setSound] = useState(true);
-  const [unit, setUnit] = useState(260);
+  const [unit, setUnit] = useState(340);
+  const [tape, setTape] = useState<string[]>([]);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
   const play = () => {
     if (playing) return;
     setPlaying(true);
+    setTape(message.split("").map(() => ""));
     let t = 600;
-    for (const letter of message) {
+    message.split("").forEach((letter, li) => {
       for (const sym of MORSE[letter]) {
         const len = sym === "." ? unit : unit * 3;
         const start = t;
-        timers.current.push(setTimeout(() => setOn(true), start));
+        timers.current.push(
+          setTimeout(() => {
+            setOn(true);
+            setTape((tp) => tp.map((x, k) => (k === li ? x + sym : x)));
+          }, start)
+        );
         timers.current.push(setTimeout(() => setOn(false), start + len));
         if (sound) tone(620, len, start, "sine", 0.12);
         t += len + unit;
       }
       t += unit * 2;
-    }
+    });
     timers.current.push(setTimeout(() => setPlaying(false), t + 300));
   };
   return (
@@ -458,7 +465,7 @@ export function MorseLantern({ message }: { message: string }) {
       </div>
       <div className="flex flex-wrap gap-2 items-center">
         <button className={primary} onClick={play} disabled={playing}>
-          {playing ? "📡 transmitting…" : "▶ Watch the lantern"}
+          {playing ? "📡 transmitting…" : tape.length ? "↻ Watch again" : "▶ Watch the lantern"}
         </button>
         <button className={ghost} onClick={() => setSound(!sound)}>{sound ? "🔊 beeps on" : "🔇 beeps off"}</button>
         <label className="text-xs text-slate-400 flex items-center gap-2">
@@ -466,6 +473,27 @@ export function MorseLantern({ message }: { message: string }) {
           <input type="range" min={150} max={450} step={30} value={600 - unit} onChange={(e) => setUnit(600 - +e.target.value)} className="accent-teal-500" />
         </label>
       </div>
+      <div>
+        <div className="text-[11px] font-mono text-slate-400 mb-1.5">📝 Your notes (the flashes write themselves down — one box per letter):</div>
+        <div className="flex flex-wrap gap-2">
+          {message.split("").map((_, i) => (
+            <div key={i} className="min-w-[52px] h-12 px-2 rounded-xl bg-slate-950 border border-teal-500/30 flex items-center justify-center font-mono text-lg font-black text-cyan-200 tracking-widest">
+              {(tape[i] || "").replace(/\./g, "•").replace(/-/g, "—") || <span className="text-slate-700 text-sm">?</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+      <details className="rounded-2xl bg-slate-950/70 border border-slate-800 p-3">
+        <summary className="text-xs font-mono text-teal-300 cursor-pointer">📖 Morse code chart (tap to open)</summary>
+        <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5 pt-3">
+          {Object.entries(MORSE).map(([l, c]) => (
+            <div key={l} className="rounded-lg bg-slate-900 border border-slate-800 px-2 py-1.5 text-center">
+              <div className="text-sm font-black text-white">{l}</div>
+              <div className="text-xs font-mono text-cyan-200 tracking-widest">{c.replace(/\./g, "•").replace(/-/g, "—")}</div>
+            </div>
+          ))}
+        </div>
+      </details>
     </div>
   );
 }

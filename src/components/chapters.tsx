@@ -276,15 +276,15 @@ export function Chapter4({ onNext }: P) {
       </Lock>
 
       <Lock id="c4-morse" index={2} title="A Lantern Across the Pond" hints={[
-        "Short flash = dot, long flash = dash. Slow the speed down and write it on paper.",
-        "It's 5 letters. The first one is  -...",
-        "-... .-.. ..- ... ....  =  B L U S H"
-      ]} solvedNote="🌸 BLUSH. Exactly what your cheeks did.">
+        "Every flash is written in the boxes for you. Match each box with the Morse chart.",
+        "It's 6 letters. The first one is  —— (M).",
+        "—— •— —• •• —•— •—  =  M A N I K A 💎"
+      ]} solvedNote="💎 MANIKA. That's what you are to him.">
         <Story>
-          As the sun set, someone flashed a lantern from across the water. It spells the color your cheeks turned that day. You may need a{" "}
-          <ExtLink href="https://en.wikipedia.org/wiki/Morse_code">Morse code chart</ExtLink>.
+          As the sun set, someone flashed a lantern from across the water — a secret word straight from Piccalito&apos;s heart. Watch it, then use the chart
+          below to decode it.
         </Story>
-        <MorseLantern message="BLUSH" />
+        <MorseLantern message="MANIKA" />
         <AnswerBox lockId="c4-morse" placeholder="What did the lantern say?" successMsg="🏮 Message decoded!" />
       </Lock>
     </ChapterShell>

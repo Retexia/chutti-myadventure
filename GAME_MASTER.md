@@ -40,7 +40,7 @@ With Supabase connected you can:
 | 3.3 | 🤝 two-player |
 | 4.1 Dress code | FORMAL |
 | 4.2 Shyness meter | Timing game, 5 hits (misses don't reset) |
-| 4.3 Lantern | BLUSH (Morse) |
+| 4.3 Lantern | MANIKA (Morse — flashes are written in boxes, chart built in) |
 | 5.1 Library | Sort books by call number → first letters spell DOMINO |
 | 5.2 Maze | Collect 5 💋 at dead ends, then reach 🏠 (the farthest point) |
 | 5.3 Shout | Mic loud for 2 seconds, or 🤝 fallback |
