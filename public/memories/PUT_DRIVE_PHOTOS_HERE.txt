@@ -1,0 +1,9 @@
+NO NEED TO DOWNLOAD PHOTOS HERE.
+
+Photos load straight from the public Google Drive folder as small resized images:
+https://drive.google.com/drive/folders/1YF8_6ULUcxEM2T47EUwC1MJUqe58ceTd
+(keep it shared as "Anyone with the link -> Viewer")
+
+To add a photo: copy its Drive share link and either
+  - add a row to DRIVE_PHOTOS in src/data/memories.ts, or
+  - paste the link into the website's "Memory Vault" modal (saved to Supabase).
