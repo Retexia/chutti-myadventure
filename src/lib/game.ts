@@ -104,16 +104,16 @@ export const HIDDEN_KISSES = ["k-boot", "k1", "k2", "k3", "k4", "k5", "k6", "k7"
 export const HINT_DELAYS = [3, 8, 15];
 
 export const PLAYER = "chutyymiii";
-const GM_SALT = "piccalito-stole-the-ring-at-one-galle-face";
+/** Codes for the two-player locks; shown only in Piccalito's HQ. */
+const GM_CODES: Record<string, string> = {
+  "c3-confess": "2720",
+  "c5-shout": "0831",
+  "c7-toll": "1206",
+  "c8-final": "0516"
+};
 
-/** Deterministic 4-digit code for a two-player lock; shown only in Piccalito's HQ. */
 export function gmCode(lockId: string): string {
-  let h = 2166136261;
-  for (const ch of GM_SALT + lockId) {
-    h ^= ch.charCodeAt(0);
-    h = Math.imul(h, 16777619);
-  }
-  return String(((h >>> 0) % 9000) + 1000);
+  return GM_CODES[lockId] ?? "";
 }
 
 export interface GameState {

@@ -360,14 +360,14 @@ export function TileArrange({ lockId, tiles, seed = 7, successMsg }: { lockId: s
 /* ---------------- Shyness meter timing game ---------------- */
 export function ShyMeter({ onSolve }: { onSolve: () => void }) {
   const [streak, setStreak] = useState(0);
-  const [zone, setZone] = useState({ start: 40, width: 16 });
+  const [zone, setZone] = useState({ start: 35, width: 30 });
   const [pos, setPos] = useState(0);
   const posRef = useRef(0);
-  const [msg, setMsg] = useState("Tap 💋 exactly when the needle is inside the pink blush zone. 5 in a row!");
+  const [msg, setMsg] = useState("Tap 💋 when the needle is inside the glowing blush zone. 5 hand kisses to go!");
   useEffect(() => {
     let raf = 0;
     const t0 = performance.now();
-    const speed = 0.0016 + streak * 0.0005;
+    const speed = 0.0009 + streak * 0.0001;
     const loop = (t: number) => {
       const p = ((Math.sin((t - t0) * speed) + 1) / 2) * 100;
       posRef.current = p;
@@ -379,7 +379,8 @@ export function ShyMeter({ onSolve }: { onSolve: () => void }) {
   }, [streak]);
   const kiss = () => {
     const p = posRef.current;
-    if (p >= zone.start && p <= zone.start + zone.width) {
+    // a little forgiveness on both edges
+    if (p >= zone.start - 3 && p <= zone.start + zone.width + 3) {
       const next = streak + 1;
       tone(600 + next * 120, 120);
       if (next >= 5) {
@@ -389,14 +390,12 @@ export function ShyMeter({ onSolve }: { onSolve: () => void }) {
         return;
       }
       setStreak(next);
-      const w = 16 - next * 2.2;
+      const w = 30 - next * 2;
       setZone({ start: 5 + Math.random() * (90 - w), width: w });
       setMsg(["", "😊 Hand kissed. She smiled.", "☺️ She looked away…", "😳 Cheeks turning pink…", "🫣 She can't look at you anymore!"][next]);
     } else {
       buzz();
-      setStreak(0);
-      setZone({ start: 40, width: 16 });
-      setMsg("😤 Missed! She pulled her hand back. Shyness reset to 0%.");
+      setMsg("🤭 Missed — she giggled. Try again, your progress is safe.");
     }
   };
   return (

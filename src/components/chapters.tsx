@@ -268,7 +268,7 @@ export function Chapter4({ onNext }: P) {
 
       <Lock id="c4-shy" index={1} title="The Shyness Meter" hints={[
         "Watch the rhythm. Tap slightly before the needle enters the pink zone.",
-        "The zone moves and shrinks after every hit. One miss resets everything — stay calm.",
+        "The zone moves after every hit. A miss doesn't cost you anything — just try again.",
         "Hold your phone with both hands and breathe. Shyness takes patience."
       ]} solvedNote="🙈 Shyness: 100%. Face: hidden. Heart: stolen.">
         <Story>Recreate the moment. Kiss her hand at exactly the right moment — five times in a row — until she&apos;s too shy to look at you.</Story>

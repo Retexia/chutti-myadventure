@@ -18,10 +18,10 @@ With Supabase connected you can:
 
 | Lock | When to give the code | Code |
 |---|---|---|
-| Ch 3 · An Empty Safe | She calls you and demands her ring back with a cute "please" | **1855** |
-| Ch 5 · Voice Verification | Only if her mic doesn't work: she sends a voice note shouting "appuchchooooo" | **2019** |
-| Ch 7 · The Archive Toll | She sends you a brand-new selfie of you two (or a video-call screenshot) | **7709** |
-| Ch 8 · The Last Vault | You **show her the ring** you stole at One Galle Face 💍 | **9401** |
+| Ch 3 · An Empty Safe | She calls you and demands her ring back with a cute "please" | **2720** |
+| Ch 5 · Voice Verification | Only if her mic doesn't work: she sends a voice note shouting "appuchchooooo" | **0831** |
+| Ch 7 · The Archive Toll | She sends you a brand-new selfie of you two (or a video-call screenshot) | **1206** |
+| Ch 8 · The Last Vault | You **show her the ring** you stole at One Galle Face 💍 | **0516** |
 
 (The HQ page always shows the current codes, so read them from there.)
 
@@ -39,7 +39,7 @@ With Supabase connected you can:
 | 3.2 Safe | Random Mastermind code |
 | 3.3 | 🤝 two-player |
 | 4.1 Dress code | FORMAL |
-| 4.2 Shyness meter | Timing game, 5 hits in a row |
+| 4.2 Shyness meter | Timing game, 5 hits (misses don't reset) |
 | 4.3 Lantern | BLUSH (Morse) |
 | 5.1 Library | Sort books by call number → first letters spell DOMINO |
 | 5.2 Maze | Collect 5 💋 at dead ends, then reach 🏠 (the farthest point) |

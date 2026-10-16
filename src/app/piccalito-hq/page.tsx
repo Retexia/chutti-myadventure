@@ -18,7 +18,7 @@ const ANSWER_KEY: Record<string, string> = {
   "c3-safe": "Random 4-digit code (Mastermind)",
   "c3-confess": "TWO-PLAYER",
   "c4-dress": "FORMAL",
-  "c4-shy": "Timing game — 5 hits in a row",
+  "c4-shy": "Timing game — 5 hits (misses don't reset)",
   "c4-morse": "BLUSH",
   "c5-shelf": "Sort by call number → DOMINO",
   "c5-maze": "Collect 5 kisses at dead ends, then reach the farthest point (🏠)",
