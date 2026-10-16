@@ -1,33 +1,56 @@
-# Operation: No Matter What — Chutyymiii & Piccalito Anniversary Quest 🕵️‍♀️💖🍁
+# Operation: No Matter What 🕵️‍♀️💍🍁
 
-A custom Next.js 14 (App Router) + Supabase interactive mystery date & escape-room game built for **Chutyymiii & Piccalito's Anniversary**.
+An anniversary puzzle hunt for **Chutyymiii**, from her handler **Piccalito**. Next.js 14 + optional Supabase, built to deploy on Vercel.
 
-## ✨ Features & Chapters Included
-1. **Stage 1 — The 11:30 AM Sleeping Beauty Protocol**: Interactive wake-up clock tuner (`11:00 AM – 12:00 PM`) + 5-pillow tap challenge.
-2. **Stage 2 — Port City Colombo to Dehiwala**: First date memory lock (Flowers & Chocolates, friends **Daham, Hasitha & Sewmini**, riding from [Port City Colombo](https://www.portcitycolombo.lk/) to **Dehiwala**, and sitting right next to her for the first time).
-3. **Stage 3 — One Galle Face Ring Heist**: Hot/Cold vault radar mini-game at [One Galle Face](https://onegalleface.com/) to uncover the **ring** Piccalito stole and still keeps safe.
-4. **Stage 4 — Formal Elegance at Diyatha Pokuna**: Formal attire check + interactive "Hand Kiss Shyness Meter" at [Diyatha Uyana](https://www.watersedge.lk/experience/diyatha-uyana/).
-5. **Stage 5 — Public Library, Domino's Pizza & The Tuk-Tuk of 5 Kisses**: Lost on the way back to the *bodima* from [Colombo Public Library](https://www.colombo.mc.gov.lk/public-library.php) & Domino's, collecting 5 kisses in a Tuk-Tuk with her iconic words: `"appuchchooooo"`, `"bhhhhh"`, `"suttee"`.
-6. **Stage 6 — Co-Founders of Retexia (`retexia.com`)**: Interactive system-builder celebrating [retexia.com](https://www.retexia.com/), encouraging her through tough client/system days, and Piccalito's goal to become the best businessman before meeting her dad.
-7. **Stage 7 — Destination Canada (`"No Matter What"`)**: Final cryptographic lock opening Piccalito's anniversary letter, YouTube soundtrack links, Memory Photo Vault, and a real-time Supabase Love Note guestbook.
+8 chapters · 25 locks · 4 two-player locks she can't solve without you · 8 hidden kisses · 98 Drive photos.
 
----
+| Chapter | What she does |
+|---|---|
+| 1 · Operation Snooze | Catch a runaway snooze button, set an analog clock from a riddle, name the thing she loves more than you |
+| 2 · The Port City Dossier | Decode a Caesar cipher, solve a seating-logic puzzle, find Dehiwala from GPS coordinates on Google Maps |
+| 3 · The One Galle Face Heist | Hot/cold locker hunt, crack a Mastermind safe, then **call you** to get her ring back |
+| 4 · The Formal Affair | Spell the dress code, a hand-kiss timing game, decode a Morse lantern across the pond |
+| 5 · Lost After Domino's | Library call-number riddle, a **foggy tuk-tuk maze** collecting 5 kisses, shout "appuchchooooo" into the mic |
+| 6 · Retexia HQ | Recon on retexia.com, hack a terminal to deploy, sign the co-founder pact |
+| 7 · The Memory Archive | Photo memory match, timeline ordering, sliding photo puzzle, a selfie toll |
+| 8 · Destination Canada | Assemble the luggage tags into the promise, find the airport code, **you show her the ring** |
 
-## 🚀 Deploy to Vercel + Supabase in 3 Minutes
+Every chapter ends with a song (YouTube), photos and a luggage tag. The finale has a boarding pass, a letter, real-life kiss coupons and a love-note reply box.
 
-### Step 1: Set Up Supabase Database
-1. Create a new project at [supabase.com](https://supabase.com).
-2. Open **SQL Editor** in your Supabase dashboard, paste the contents of `supabase/schema.sql`, and click **Run**.
-3. Copy your **Project URL** and **anon public key** from **Project Settings → API**.
+**The answer key and two-player codes are in [GAME_MASTER.md](GAME_MASTER.md). Your live control room is at `/piccalito-hq`.**
 
-### Step 2: Add Your Google Drive Photos
-- Photos load straight from the public Google Drive folder (`1YF8_6ULUcxEM2T47EUwC1MJUqe58ceTd`) as small resized images — nothing is downloaded into the repo. Keep the folder shared as **Anyone with the link → Viewer**.
-- To add more: copy a photo's Drive share link and add a row to `DRIVE_PHOTOS` in `src/data/memories.ts`, **or** paste the link into the **Memory Vault** modal once deployed (saved to Supabase).
+## Login and the private hotline 💬
 
-### Step 3: Deploy to Vercel
-1. Push this folder to a GitHub repository (or run `npx vercel` inside this directory).
-2. In Vercel, add two Environment Variables:
+- **Her login:** codename `chutyymiii` → handler `piccalito` → the secret passcode you text her (`NEXT_PUBLIC_HER_PASSCODE`, default `1130`).
+- **Your login:** `/piccalito-hq` with your PIN (`NEXT_PUBLIC_GM_PIN`, default `ring-thief-1130`).
+- **Chat:** she has a floating 💬 hotline on every chapter, and you have the same chat in your HQ. It includes online status, a typing indicator, messages that "decrypt" as they arrive, 🔒 secret messages that stay hidden until tapped, quick stickers ("appuchchooooo", "bhhhhh", "suttee"…), big emoji, flying hearts, and a 📍 tag showing which chapter she was on.
+- When she clears a chapter, a pre-written message from you lands in the chat (edit them in `src/lib/chat.ts` → `AUTO_MESSAGES`). Only you see the 🤖 label on these.
+- The login is a fun lock, not bank-grade security: the passcodes ship in the page's JavaScript, so a determined developer could find them.
+- Chat needs Supabase (run the updated `supabase/schema.sql`).
+
+## Photos
+
+The photos load straight from the public Google Drive folder as small resized images (~150 KB each). Nothing is stored in the repo or in Supabase. Keep the folder shared as **Anyone with the link → Viewer**. Supabase only stores links that are added through the Memory Vault.
+
+## Deploy (about 5 minutes)
+
+1. **Supabase (optional, but needed for your live HQ):** create a project at supabase.com → SQL Editor → paste `supabase/schema.sql` → Run. Copy the Project URL and the anon key from Project Settings → API.
+2. **Vercel:** push this folder to GitHub → import it in Vercel (framework: Next.js, no settings to change).
+3. In Vercel → Settings → Environment Variables, add:
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-3. Click **Deploy** — Next.js will build and publish your anniversary adventure automatically!
-# chutti-myadventure
+   - `NEXT_PUBLIC_HER_PASSCODE` (her login passcode, default `1130`)
+   - `NEXT_PUBLIC_GM_PIN` (your HQ PIN, default `ring-thief-1130`)
+4. Deploy. Text her the main URL **and her passcode**. Keep `/piccalito-hq` open on your phone to chat.
+
+Without Supabase the whole game still works (progress saves in her browser, and the two-player codes still work). You just won't get the live view, live messages or remote unlocks.
+
+## Local dev
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```

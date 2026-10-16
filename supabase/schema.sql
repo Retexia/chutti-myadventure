@@ -1,15 +1,34 @@
 -- ============================================================================
--- OPERATION: NO MATTER WHAT — CHUTYYMIII & PICCALITO ANNIVERSARY SUPABASE SCHEMA
--- Paste and run this entire script in your Supabase Dashboard -> SQL Editor
+-- OPERATION: NO MATTER WHAT — Supabase schema
+-- Paste this whole file into Supabase Dashboard → SQL Editor → Run.
+-- Safe to run more than once.
 -- ============================================================================
 
-create table if not exists public.quest_progress (
-  id uuid primary key default gen_random_uuid(),
-  player_name text not null default 'chutyymiii',
-  current_stage int not null default 0,
-  unlocked_stages int[] not null default '{0}',
-  kisses_collected int not null default 0,
+-- Her saved progress (one row). Piccalito's HQ page reads this live.
+create table if not exists public.quest_state (
+  player text primary key,
+  state jsonb not null,
   updated_at timestamptz not null default now()
+);
+
+-- Live transmissions from Piccalito's HQ: hint messages + remote unlocks.
+create table if not exists public.gm_messages (
+  id bigint generated always as identity primary key,
+  kind text not null check (kind in ('msg', 'unlock')),
+  body text,
+  lock_id text,
+  created_at timestamptz not null default now()
+);
+
+-- The private hotline between Chutyymiii and Piccalito.
+create table if not exists public.chat_messages (
+  id bigint generated always as identity primary key,
+  sender text not null check (sender in ('Chutyymiii', 'Piccalito')),
+  body text not null check (char_length(body) <= 2000),
+  secret boolean not null default false,
+  auto boolean not null default false,
+  chapter int,
+  created_at timestamptz not null default now()
 );
 
 create table if not exists public.love_notes (
@@ -19,6 +38,7 @@ create table if not exists public.love_notes (
   created_at timestamptz not null default now()
 );
 
+-- Only links are stored (Google Drive share links), never image files.
 create table if not exists public.memory_photos (
   id uuid primary key default gen_random_uuid(),
   image_url text not null,
@@ -27,23 +47,28 @@ create table if not exists public.memory_photos (
   created_at timestamptz not null default now()
 );
 
-alter table public.quest_progress enable row level security;
+alter table public.quest_state enable row level security;
+alter table public.gm_messages enable row level security;
+alter table public.chat_messages enable row level security;
 alter table public.love_notes enable row level security;
 alter table public.memory_photos enable row level security;
 
-create policy "Public access quest_progress" on public.quest_progress for all using (true) with check (true);
-create policy "Public access love_notes" on public.love_notes for all using (true) with check (true);
-create policy "Public access memory_photos" on public.memory_photos for all using (true) with check (true);
+-- This is a private two-person game using the public anon key, so access is open.
+drop policy if exists "open quest_state" on public.quest_state;
+create policy "open quest_state" on public.quest_state for all using (true) with check (true);
+drop policy if exists "open gm_messages" on public.gm_messages;
+create policy "open gm_messages" on public.gm_messages for all using (true) with check (true);
+drop policy if exists "open love_notes" on public.love_notes;
+create policy "open love_notes" on public.love_notes for all using (true) with check (true);
+drop policy if exists "open memory_photos" on public.memory_photos;
+create policy "open memory_photos" on public.memory_photos for all using (true) with check (true);
+drop policy if exists "open chat_messages" on public.chat_messages;
+create policy "open chat_messages" on public.chat_messages for all using (true) with check (true);
 
--- Optional: Create a public Supabase Storage bucket named 'memories' for your Google Drive photos
-insert into storage.buckets (id, name, public)
-values ('memories', 'memories', true)
-on conflict (id) do nothing;
-
-create policy "Public read access for memories bucket"
-on storage.objects for select
-using ( bucket_id = 'memories' );
-
-create policy "Public upload access for memories bucket"
-on storage.objects for insert
-with check ( bucket_id = 'memories' );
+-- Realtime: new chat messages appear instantly (the app also polls as a fallback).
+do $$
+begin
+  if not exists (select 1 from pg_publication_tables where pubname = 'supabase_realtime' and tablename = 'chat_messages') then
+    alter publication supabase_realtime add table public.chat_messages;
+  end if;
+end $$;
